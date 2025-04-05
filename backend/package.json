@@ -1,0 +1,29 @@
+{
+  "name": "backend-ecommerce-node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+  },
+  "keywords": [],
+  "author": "Jose Morales",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.14.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.22"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.14.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
