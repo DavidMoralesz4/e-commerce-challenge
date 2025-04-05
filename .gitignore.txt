@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+.env
+dist/
+build/
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# VSCode
+.vscode/
+
+# TypeScript
+*.tsbuildinfo
+
+# React/Next
+frontend/.next/
+frontend/.env
