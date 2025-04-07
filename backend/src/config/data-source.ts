@@ -5,6 +5,7 @@ import { Category } from "../entities/Category";
 import { Color } from "../entities/Color";
 import { Size } from "../entities/Size";
 import { DATABASE_URL, PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER,  } from "..";
+import { Image } from '../entities/Images';
 
 export const AppDataSource = new DataSource({
     type: "postgres",
