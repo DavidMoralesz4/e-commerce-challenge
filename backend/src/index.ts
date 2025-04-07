@@ -13,7 +13,7 @@ const connection = async () => {
       console.log("Connected to database successfully");
   
       server.listen(PORT, () => {
-        console.log(`server running in port ${PORT}`);
+        console.log(`server running in port ${PORT} 🚀`);
       });
     } catch (error) {
       console.error("Error during database connection or server startup:", error);
