@@ -1,11 +1,12 @@
+import { AppDataSource } from "./config/data-source";
+import dotenv from 'dotenv'
 import 'reflect-metadata';
 import { server } from "./server";
-import { AppDataSource } from "./config/data-source";
 
-import dotenv from 'dotenv'
 
 dotenv.config()
-export const { PORT, PGPASSWORD, DATABASE_URL, PGPORT, PGHOST, PGUSER, PGDATABASE } = process.env;
+
+export const { PORT } = process.env;
 
 const connection = async () => {
     try {

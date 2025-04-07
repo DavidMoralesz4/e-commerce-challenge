@@ -1,0 +1,7 @@
+{
+    "build": {
+      "root": "backend"
+    },
+    "start": "node dist/index.js"
+  }
+  
