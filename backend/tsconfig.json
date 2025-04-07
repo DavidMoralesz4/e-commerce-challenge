@@ -1,17 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2022",
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "strict": true,
     "outDir": "./dist",
-    "moduleDetection": "force",
-    "module": "Preserve",
-    "resolveJsonModule": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "allowJs": true,
     "esModuleInterop": true,
-    "isolatedModules": true
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "allowJs": true,
+    "skipLibCheck": true
   },
-  "include": ["src/**/*"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

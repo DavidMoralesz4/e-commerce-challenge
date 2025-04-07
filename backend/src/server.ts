@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import { productsRoute } from './routes/productsRoute';
 
+
 export const server = express();
 
 // Middlewares
