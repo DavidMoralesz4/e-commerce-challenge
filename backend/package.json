@@ -2,6 +2,7 @@
   "name": "backend-ecommerce-node",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
