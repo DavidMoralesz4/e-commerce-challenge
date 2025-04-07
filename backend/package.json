@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "build": "pkgroll",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "Jose Morales",
@@ -23,7 +25,9 @@
     "@types/express": "^5.0.1",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.14.0",
+    "pkgroll": "^2.12.1",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.3"
   }
 }
