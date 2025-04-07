@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
+    "module": "commonjs",                     // <--- importante
     "moduleResolution": "Node",
     "strict": true,
     "outDir": "./dist",
+    "rootDir": "./src",                       // <--- agrega esto
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
