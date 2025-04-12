@@ -5,6 +5,7 @@ import { Size } from "../entities/Size";
 import { Color } from "../entities/Color";
 import { Image } from "../entities/Images";
 
+
 export const AppDataSource = new DataSource({
   type: "postgres",
   host: process.env.PGHOST,
@@ -14,7 +15,7 @@ export const AppDataSource = new DataSource({
   database: process.env.PGDATABASE,
   synchronize: true,
   logging: true,
-  entities: ["src/entities/**/*.ts"],
+  entities: ["dist/entities/**/*.js"],
   migrations: [],
   subscribers: [],
 });

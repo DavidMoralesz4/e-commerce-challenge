@@ -1,82 +1,88 @@
-import { AppDataSource, CategoryModel, ColorModel, ProductModel, SizeModel } from "../config/data-source"
-import { Category } from "../entities/Category";
-import { Color } from "../entities/Color";
+import { In } from "typeorm";
+import {
+  AppDataSource,
+  CategoryModel,
+  ColorModel,
+  ImageModel,
+  ProductModel,
+  SizeModel,
+} from "../config/data-source";
 import { Product } from "../entities/Product";
-import { Size } from "../entities/Size";
 import { IProducts } from "../interfaces/products";
 
 /// Servicio para mostrar el producto
-export const getProductsService = async() => {
-    try {
-        const products = await ProductModel.find();
-        return products
-    } catch (error: unknown) {
-        if(error instanceof Error) {
-            throw new Error(error.message);
-        }
-    }
-}
-
-
-export const createProductService = async (data: IProducts) => {
-    const { name, price, stock, category, images, sizes, colors } = data;
-
-    try {
-        const foundCategory = await CategoryModel.findOneBy({ id: category });
-        if (!foundCategory) {
-            throw new Error(`Categoría con ID ${category} no encontrada`);
-        }
-
-        const newProduct = await AppDataSource.transaction(async (transactionalEntityManager) => {
-            const product = transactionalEntityManager.create(Product, {
-                name,
-                price,
-                stock,
-                category: foundCategory,
-            });
-
-            // Asociar tallas (si existen)
-            if (sizes && Array.isArray(sizes)) {
-                const foundSizes = await transactionalEntityManager.find(Size, {
-                    where: { id: sizes },
-                });
-                if (foundSizes.length !== sizes.length) {
-                    throw new Error("Algunas tallas no existen");
-                }
-                product.sizes = foundSizes;
-            }
-
-            // Asociar colores (si existen)
-            if (colors && Array.isArray(colors)) {
-                const foundColors = await transactionalEntityManager.find(Color, {
-                    where: { id: colors },
-                });
-                if (foundColors.length !== colors.length) {
-                    throw new Error("Algunos colores no existen");
-                }
-                product.colors = foundColors;
-            }
-
-            // Guardar el producto
-            return await transactionalEntityManager.save(product);
-        });
-
-        return newProduct;
-    } catch (error: unknown) {
-        if (error instanceof Error) {
-            throw new Error(error.message);
-        }
-    }
+export const getProductsService = async () => {
+  try {
+    const products = await ProductModel.find({
+      relations: ["images", "sizes", "colors"],
+    });
+    return products;
+  } catch (error) {
+    throw new Error("Error al obtener los productos");
+  }
 };
 
+export const createProductService = async (data: IProducts) => {
+  try {
+    const { name, price, stock, category, images, sizes, colors } = data;
 
-export const deleteProductsService = async(id: string) => {
- try {
-    const product = ProductModel.delete(id)
-    return product
- } catch (error: unknown) {
-    if (error instanceof Error) {
-        throw new Error(error.message);
+    const categories = await CategoryModel.findOneBy({ id: category });
+    if (!categories) {
+      throw new Error("Categoría no encontrada");
     }
- }
-}
+
+    const newProduct = new Product();
+    newProduct.name = name;
+    newProduct.price = price;
+    newProduct.stock = stock;
+    newProduct.category = categories;
+
+    const savedProduct = await ProductModel.save(newProduct);
+
+    if (images?.length > 0) {
+      const imagesToSave = images.map((url) => {
+        return ImageModel.create({
+          url: url,
+          product: savedProduct,
+        });
+      });
+      await ImageModel.save(imagesToSave);
+    }
+
+    // 4. Manejar tallas (ManyToMany)
+    if (sizes?.length > 0) {
+      const allSizes = await SizeModel.findBy({ id: In(sizes) });
+      savedProduct.sizes = allSizes;
+    }
+
+    // 5. Manejar colores (ManyToMany)
+    if (colors?.length > 0) {
+      const allColors = await ColorModel.findBy({ id: In(colors) });
+      savedProduct.colors = allColors;
+    }
+
+    // 6. Guardar relaciones y devolver producto completo
+    await ProductModel.save(savedProduct);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+};
+
+export const deleteProductsService = async (id: string) => {
+  try {
+    const product = ProductModel.delete(id);
+    return product;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+};
+
+export const updateProductService = async (id: string) => {
+  try {
+    // Actualizar un producto
+  } catch (error) {}
+};

@@ -3,7 +3,7 @@ import {
   createProductController,
   deleteProductsController,
   detailProductsController,
-  getProductController,
+  getProductsController,
   searchProductController,
   updateProductsController,
 } from "../controllers/productsController";
@@ -11,8 +11,7 @@ import {
 export const productsRoute = Router();
 
 // Obtener todos los productos
-productsRoute.get("/products", getProductController);
-
+productsRoute.get("/products", getProductsController);
 // Detalle de los productos
 productsRoute.get("/products/detail", detailProductsController);
 
